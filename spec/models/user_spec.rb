@@ -4,9 +4,8 @@ describe User do
 
   before do
     @user = User.new(name: "Example User", email: "user@example.com",
-    					password: "foobar", password_conformation: "foobar")
-  	
-  	end
+    					password: "foobar", password_confirmation: "foobar")
+  end
 	
 	
   subject { @user }
@@ -66,27 +65,25 @@ describe User do
   	end
 
 	describe "when password is not present" do
-    	before do
-      		@user = User.new(name: "Example User", email: "user@example.com",
-                       password: " ", password_confirmation: " ")
-    	it { should_not be_valid }
-  	end
+  		before do
+    		@user = User.new(name: "Example User", email: "user@example.com",
+                     password: " ", password_confirmation: " ")
+  			end
+  		it { should_not be_valid }
+	
+  	
 
-  	describe "when password doesn't match confirmation" do
-   		before { @user.password_confirmation = "mismatch" }
-    	it { should_not be_valid }
+  		describe "when password doesn't match confirmation" do
+   			before { @user.password_confirmation = "mismatch" }
+    		it { should_not be_valid }
+    	end
     end
-
-  	describe "when password confirmation is nil" do
-    	before { @user.password_confirmation = nil }
-    	it { should_not be_valid }
-  	end
 
   	describe "when password is too short" do
     	before { @user.password = @user.password_confirmation = "a" * 5 }
-    	it { should_not be_valid }
+    	it { should be_invalid }
     end
-
+ 
   	describe "return value of authenticate method" do
     	before { @user.save }
     	let(:found_user) { User.find_by(email: @user.email) }
@@ -103,4 +100,3 @@ describe User do
     		end
 		end
 	end
-end
