@@ -20,11 +20,22 @@ module SessionsHelper
     user == current_user
   end
 
-  	def sign_out
-  		current_user.update_attribute(:remember_token,
-  										User.digest(User.new_remember_token))
+  def store_location
+  end # this was added in because it was not defined
+  ##### IMPORTANT. I do not know what this variable is supposed to be set to. ######
 
-		cookies.delete(:remember_token)
-		@current_user = nil
+  def signed_in_user
+    unless signed_in?
+      store_location
+      redirect_to signin_url, notice: "Please sign in."
+    end
+  end
+  
+  def sign_out
+  	current_user.update_attribute(:remember_token,
+  									User.digest(User.new_remember_token))
+
+	 cookies.delete(:remember_token)
+	 @current_user = nil
 	end
 end
