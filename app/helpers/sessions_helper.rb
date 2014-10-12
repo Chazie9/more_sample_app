@@ -20,9 +20,6 @@ module SessionsHelper
     user == current_user
   end
 
-  def store_location
-  end # this was added in because it was not defined
-  ##### IMPORTANT. I do not know what this variable is supposed to be set to. ######
 
   def signed_in_user
     unless signed_in?
